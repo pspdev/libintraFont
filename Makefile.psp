@@ -5,7 +5,7 @@ CFLAGS = -O2 -G0 -ffast-math -Wall -Wextra -I include -DPSP -D_PSP
 LDFLAGS =
 
 OBJS = src/intraFont.o src/libccc.o
-TARGET_LIB = lib/libintrafont_psp.a
+TARGET_LIB = lib/libintrafont.a
 
 include $(PSPSDK)/lib/build.mak
 
