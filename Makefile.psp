@@ -1,7 +1,7 @@
 PSPSDK = $(shell psp-config --pspsdk-path)
 PSPDIR = $(shell psp-config --psp-prefix)
 
-CFLAGS = -O2 -G0 -ffast-math -Wall -Wextra -I include 
+CFLAGS = -O2 -G0 -ffast-math -Wall -Wextra -I include -DPSP -D_PSP
 LDFLAGS =
 
 OBJS = src/intraFont.o src/libccc.o
