@@ -1,0 +1,33 @@
+CC = kos-cc
+AR = kos-ar
+
+CFLAGS = -Wall -Wextra -D_arch_dreamcast -I include -I include/gldc
+LDFLAGS =
+
+SRC_DIR = src
+
+OBJS = src/intraFont.o src/libccc.o
+TARGET_LIB = lib/libintrafont_dc.a
+
+all: release
+
+debug: CFLAGS += -O0 -g -DDEBUG
+debug: $(TARGET_LIB)
+
+release: CFLAGS += -Os -s
+release: $(TARGET_LIB)
+
+samples:
+	make -C samples/fonttest -f Makefile.dc clean dist
+	make -C samples/sinusoid -f Makefile.dc clean dist
+
+$(TARGET_LIB): $(OBJS)
+	$(AR) crus $@ $^
+
+dist: release
+	tar -zcvf libintraFont_dreamcast.tar.gz $(TARGET_LIB) include/intraFont.h include/libccc.h
+
+clean:
+	-rm $(OBJS) $(TARGET_LIB)
+
+.PHONY: release debug clean dist samples

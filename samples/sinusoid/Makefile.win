@@ -1,0 +1,25 @@
+CC = x86_64-w64-mingw32-gcc
+
+TARGET_EXE = sinus.exe
+OBJS = sinus.o
+
+INCDIR = ../../include
+CFLAGS = -Wall -Wextra -I$(INCDIR)
+
+LIBDIR = ../../lib
+LDFLAGS = -L$(LIBDIR)
+LIBS = -lintrafont_win -lglfw3 -lopengl32 -lglu32 -luser32 -lgdi32
+
+all: release
+
+debug: CFLAGS += -O0 -g
+debug: $(TARGET_EXE)
+
+release: CFLAGS += -Os -s
+release: $(TARGET_EXE)
+
+$(TARGET_EXE): $(OBJS)
+	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
+
+clean:
+	-del $(OBJS) $(TARGET_EXE)

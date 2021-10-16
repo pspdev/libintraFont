@@ -1,0 +1,40 @@
+TARGET = fonttest.elf
+OBJS = fonttest.o
+
+LDFLAGS =
+
+INCDIR = ../../include
+CFLAGS = -Wall -Wextra -D_arch_dreamcast -I $(INCDIR) -I $(INCDIR)/gldc
+ASFLAGS = $(CFLAGS)
+
+LIBDIR = ../../lib
+LDFLAGS = -L$(LIBDIR)
+LIBS = -lintrafont_dc -lGLdc
+
+include $(KOS_BASE)/Makefile.rules
+
+all: dist
+
+debug: CFLAGS += -O0 -g
+debug: $(TARGET)
+
+release: CFLAGS += -Os -s
+release: $(TARGET)
+
+clean:
+	-rm -f $(TARGET) $(OBJS)
+
+rm-elf:
+	-rm -f $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(KOS_CC) $(KOS_CFLAGS) $(KOS_LDFLAGS) -o $(TARGET) $(KOS_START) \
+		$(OBJS) $(OBJEXTRA) $(LDFLAGS) $(LIBS) -lm -lkosutils $(KOS_LIBS)
+
+run: release
+	$(KOS_LOADER) $(TARGET)
+
+dist: release
+	rm -f $(OBJS) 
+	$(KOS_CC_BASE)/sh-elf/bin/objcopy -R .stack -O binary $(TARGET) $(basename $(TARGET))
+	$(KOS_BASE)/utils/scramble/scramble $(basename $(TARGET)) 1ST_READ.BIN

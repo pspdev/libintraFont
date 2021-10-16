@@ -1,0 +1,32 @@
+PSPSDK = $(shell psp-config --pspsdk-path)
+PSPDIR = $(shell psp-config --psp-prefix)
+
+CFLAGS = -O2 -G0 -ffast-math -Wall -Wextra -I include 
+LDFLAGS =
+
+OBJS = src/intraFont.o src/libccc.o
+TARGET_LIB = lib/libintrafont_psp.a
+
+include $(PSPSDK)/lib/build.mak
+
+all: release
+
+debug: CFLAGS += -O0 -g -DDEBUG
+debug: $(TARGET_LIB)
+
+release: CFLAGS += -Os -ffast-math
+release: $(TARGET_LIB)
+
+samples:
+	make -C samples/fonttest -f Makefile.psp clean EBOOT.PBP
+	make -C samples/sinusoid -f Makefile.psp clean EBOOT.PBP
+
+dist: release
+	tar -zcvf libintraFont_psp.tar.gz $(TARGET_LIB) include/intraFont.h include/libccc.h
+
+install: all
+	mkdir -p $(PSPDIR)/include $(PSPDIR)/lib
+	cp include/*.h $(PSPDIR)/include
+	cp lib/*.a $(PSPDIR)/lib
+
+.PHONY: release debug clean dist samples

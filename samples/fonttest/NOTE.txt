@@ -1,0 +1,9 @@
+Need to supply your own:
+jpn0.pgf  ltn0.pgf  ltn10.pgf  ltn12.pgf  ltn14.pgf  ltn2.pgf  ltn4.pgf  ltn6.pgf  ltn8.pgf
+kr0.pgf   ltn1.pgf  ltn11.pgf  ltn13.pgf  ltn15.pgf  ltn3.pgf  ltn5.pgf  ltn7.pgf  ltn9.pgf
+gb3s1518.bwfon
+cptbl.dat
+imagefont.bin
+
+
+from a real PSP!

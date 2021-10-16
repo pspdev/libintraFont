@@ -1,0 +1,33 @@
+CC = x86_64-w64-mingw32-gcc
+AR = x86_64-w64-mingw32-gcc-ar
+
+CFLAGS = -Wall -Wextra -I include
+LDFLAGS =
+
+SRC_DIR = src
+
+OBJS = src/intraFont.o src/libccc.o
+TARGET_LIB = lib/libintrafont_win.a
+
+all: release
+
+debug: CFLAGS += -O0 -g -DDEBUG
+debug: $(TARGET_LIB)
+
+release: CFLAGS += -Os -ffast-math
+release: $(TARGET_LIB)
+
+samples:
+	make -C samples/fonttest -f Makefile.win clean debug
+	make -C samples/sinusoid -f Makefile.win clean debug
+
+$(TARGET_LIB): $(OBJS)
+	$(AR) crus $@ $^
+
+dist: release
+	ar -crus libintraFont_x86_64-w64-mingw32.zip $(TARGET_LIB) include/intraFont.h include/libccc.h
+
+clean:
+	-del $(SRC_DIR)\\*.o
+
+.PHONY: release debug clean dist samples
