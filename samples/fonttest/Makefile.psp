@@ -2,14 +2,14 @@ TARGET = intraFontTest
 OBJS = fonttest.o 
 
 INCDIR = ../../include
-CFLAGS = -O2 -G0 -Wall -Wextra -g
+CFLAGS = -O2 -G0 -Wall -Wextra -g -D_PSP
 
 BUILD_PRX = 1
 PSP_FW_VERSION = 500
 
 LIBDIR = ../../lib
 LDFLAGS = 
-LIBS = -lintrafont_psp -lpspgum -lpspgu -lpng -lz -lm
+LIBS = -lintrafont -lpspgum -lpspgu -lpng -lz -lm
 
 EXTRA_TARGETS = EBOOT.PBP
 PSP_EBOOT_TITLE = intraFont-G Test
