@@ -1387,7 +1387,7 @@ float intraFontPrintColumnUCS2Ex(intraFont *font, float x, float y, float column
 						{
 
 						case INTRAFONT_SCROLL_LEFT:							   //scroll left
-							sceGuScissor(left - 2, 0, left + column + 4, 272); //limit to column width
+							sceGuScissor(left - 2, 0, column + 2, 272); //limit to column width
 							if (count < 60)
 							{
 								//show initial text for 1s
@@ -1408,7 +1408,7 @@ float intraFontPrintColumnUCS2Ex(intraFont *font, float x, float y, float column
 							break;
 
 						case INTRAFONT_SCROLL_SEESAW:											//scroll left and right
-							sceGuScissor(left - column / 2 - 2, 0, left + column / 2 + 4, 272); //limit to column width
+							sceGuScissor(left - column / 2 - 2, 0, column + 2, 272); //limit to column width
 							textwidth -= column;
 							if (count < 60)
 							{
@@ -1434,7 +1434,7 @@ float intraFontPrintColumnUCS2Ex(intraFont *font, float x, float y, float column
 							break;
 
 						case INTRAFONT_SCROLL_RIGHT:						   //scroll right
-							sceGuScissor(left - column - 2, 0, left + 4, 272); //limit to column width
+							sceGuScissor(left - column - 2, 0, column + 2, 272); //limit to column width
 							if (count < 60)
 							{
 								left -= textwidth; //show initial text for 1s
@@ -1457,7 +1457,7 @@ float intraFontPrintColumnUCS2Ex(intraFont *font, float x, float y, float column
 							break;
 
 						case INTRAFONT_SCROLL_THROUGH:						   //scroll through
-							sceGuScissor(left - 2, 0, left + column + 4, 272); //limit to column width
+							sceGuScissor(left - 2, 0, column + 2, 272); //limit to column width
 							if (count < (textwidth + column + 30))
 							{
 								left += column + 4 - count; //scroll through
