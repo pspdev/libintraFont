@@ -529,7 +529,12 @@ int intraFontPreCache(intraFont *font, unsigned int options)
 	return 1;
 }
 
-intraFont *intraFontLoad(const char *filename, unsigned int options)
+intraFont* intraFontLoad(const char *filename, unsigned int options)
+{
+	return intraFontLoadEx(filename, options, 0, 0);
+}
+
+intraFont* intraFontLoadEx(const char *filename, unsigned int options, unsigned long offset, unsigned long filesize)
 {
 	unsigned long i, j;
 	static Glyph bw_glyph = (Glyph){0, 0, 16, 18, 0, 15, PGF_BMP_H_ROWS, 0, 64, 0};
@@ -581,9 +586,13 @@ intraFont *intraFontLoad(const char *filename, unsigned int options)
 #endif
 	if (!file)
 		return NULL;
-	fseek(file, 0, SEEK_END);
-	unsigned long filesize = ftell(file);
-	fseek(file, 0, SEEK_SET);
+
+	if (filesize == 0){
+		fseek(file, 0, SEEK_END);
+		filesize = ftell(file);
+	}
+
+	fseek(file, offset, SEEK_SET);
 
 	//read pgf header
 	static PGF_Header header;

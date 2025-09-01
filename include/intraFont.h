@@ -210,6 +210,21 @@ void intraFontShutdown(void);
 intraFont* intraFontLoad(const char *filename,unsigned int options);
 
 /**
+ * Load a pgf font contained within another file.
+ *
+ * @param filename - Path to the file containing the font
+ *
+ * @param  options - INTRAFONT_XXX flags as defined above including flags related to CACHE (ored together)
+ * 
+ * @param offset - start of the pgf or bwfon file within the containing package
+ * 
+ * @param filesize - total size in bytes of the pgf or bwfon file
+ *
+ * @returns A ::intraFont struct
+ */
+intraFont* intraFontLoadEx(const char *filename,unsigned int options, unsigned long offset, unsigned long filesize);
+
+/**
  * Free the specified font.
  *
  * @param font - A valid ::intraFont
